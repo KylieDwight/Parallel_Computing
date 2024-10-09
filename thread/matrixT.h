@@ -24,6 +24,11 @@ void* matrixMultiplyThread(void* arg) {
     // Calculate the start and ending row chunck for each thread to handle
     int start_row = thread_id * num_rows;
     int end_row = start_row + num_rows;
+    int remaining_rows = N % NUM_THREADS;
+    if(thread_id == NUM_THREADS - 1){
+        end_row = end_row + remaining_rows;
+    }
+    
 
     // Loop through the start and end row assigned to the thread and compute matrix multiplication
     for (int i = start_row; i < end_row; i++) {
