@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define SIZE 1000000
+#define SIZE 13
 #define NUM_THREADS 4
 
 long long arr[SIZE];
@@ -14,7 +14,11 @@ void* sumPart(void* arg) {
     int thread_id = *(int*)arg;
     int chunk_size = SIZE / NUM_THREADS;
     int start = thread_id * chunk_size;
-    int end = (thread_id == NUM_THREADS - 1) ? SIZE : start + chunk_size;
+    int end = start + chunk_size;
+    int remaining = SIZE % NUM_THREADS;
+    if(thread_id == NUM_THREADS - 1){
+        end = end + remaining;
+    }
 
     long long temp;
     // Calculate partial sums
